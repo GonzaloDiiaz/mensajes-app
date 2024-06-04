@@ -1,4 +1,4 @@
-package org.example.mensaje_app;
+package org.example.mensaje_app.service;
 
 public class MensajesService {
     public static void crearMensaje(){

@@ -1,6 +1,7 @@
 package org.example.mensaje_app;
 
-import java.sql.Connection;
+import org.example.mensaje_app.service.MensajesService;
+
 import java.util.Scanner;
 
 public class Main {

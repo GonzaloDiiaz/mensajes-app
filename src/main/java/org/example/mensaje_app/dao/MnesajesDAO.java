@@ -1,4 +1,6 @@
-package org.example.mensaje_app;
+package org.example.mensaje_app.dao;
+
+import org.example.mensaje_app.model.Mensajes;
 
 public class MnesajesDAO {
 

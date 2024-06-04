@@ -1,4 +1,4 @@
-package org.example.mensaje_app;
+package org.example.mensaje_app.model;
 
 public class Mensajes {
     int id_mensaje;
