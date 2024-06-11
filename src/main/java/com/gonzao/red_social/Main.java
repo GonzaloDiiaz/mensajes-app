@@ -1,5 +1,6 @@
 package com.gonzao.red_social;
 
+import com.gonzao.red_social.dao.UserDAO;
 import com.gonzao.red_social.model.User;
 import com.gonzao.red_social.service.MensajesService;
 import com.gonzao.red_social.service.UserService;
@@ -8,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {

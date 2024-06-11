@@ -23,6 +23,7 @@ public class Menu {
         do {
             System.out.println(sessionMenuMessage);
             opcion = sc.nextInt();
+            sc.nextLine();
 
             switch (opcion){
                 case 1:

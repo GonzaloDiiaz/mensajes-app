@@ -93,31 +93,36 @@ public class UserDAO {
     public static User loginDB(User user){
         Connection conexion = DbConnection.getInstance().getConnection();
 
-        try (PreparedStatement ps = conexion.prepareStatement("SELECT * FROM user WHERE email = ? AND password = ?")) {
-            ps.setString(1, user.getEmail());
+        try (PreparedStatement ps = conexion.prepareStatement("SELECT * FROM user WHERE LOWER(email) = LOWER(?) AND password = ?")) {
+            // Normalizar el correo electrónico ingresado por el usuario
+            String userEmail = user.getEmail().toLowerCase().trim();
+
+            // Establecer los parámetros en la consulta preparada
+            ps.setString(1, userEmail);
             ps.setString(2, user.getPassword());
 
-            // Añadir un mensaje de depuración para verificar la consulta SQL generada
             System.out.println("Consulta SQL ejecutada: " + ps.toString());
 
             ResultSet rs = ps.executeQuery();
 
-            User login = new User(); // Aquí se crea un nuevo objeto User
+            User login = null; // Inicializamos como null para el caso de que no se encuentre ningún usuario
 
-            if(rs.next()){
+            // Verificar si se encontró un usuario con las credenciales proporcionadas
+            if (rs.next()) {
                 System.out.println("Inicio de sesión correcto!");
+                login = new User();
                 login.setId_user(rs.getInt("id_user"));
                 login.setEmail(rs.getString("email"));
                 login.setFullname(rs.getString("fullname"));
+                System.out.println("Usuario encontrado: ID = " + login.getId_user() + ", Email = " + login.getEmail() + ", Fullname = " + login.getFullname());
             } else {
                 System.out.println("Inicio de sesión fallido. No se encontró ningún usuario con las credenciales proporcionadas.");
             }
-            return login; // Aquí se devuelve el objeto User creado, incluso si no se encontró ningún usuario
+            return login;
         } catch (SQLException e) {
             System.out.println("No se pudo autenticar con el servidor");
             e.printStackTrace();
         }
         return null;
     }
-
 }

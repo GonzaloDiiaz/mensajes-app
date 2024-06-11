@@ -26,6 +26,9 @@ public class UserService {
         if (!fullname.isEmpty() && !password.isEmpty() && !email.isEmpty()){
             User registro = new User();
             registro.setFullname(fullname);
+
+            // Hash de la contraseña antes de guardarla
+
             registro.setPassword(password);
             registro.setEmail(email);
 
@@ -70,8 +73,7 @@ public class UserService {
             return;
         }
 
-        String passwordHashed = getMd5Hash(password);
-        User updatedUser = new User(usuario.getId_user(),email,passwordHashed,fullName);
+        User updatedUser = new User(usuario.getId_user(),email,password,fullName);
         UserDAO.updateUser(updatedUser);
     }
 
@@ -88,14 +90,7 @@ public class UserService {
         System.out.println(passwordMessage);
         String password = sc.next();
 
-        // Obtener el hash de la contraseña ingresada por el usuario
-        String passwordHashed = getMd5Hash(password);
-
-        // Imprimir el hash de la contraseña ingresada por el usuario
-        System.out.println("Hash de la contraseña ingresada: " + passwordHashed);
-
-        // Crear el objeto User con el correo electrónico y el hash de la contraseña
-        User login = new User(email, passwordHashed);
+        User login = new User(email, password);
 
         // Llamar al método loginDB para autenticar al usuario
         User result = UserDAO.loginDB(login);
@@ -107,11 +102,6 @@ public class UserService {
             System.out.println("Inicio de sesión fallido. No se encontró ningún usuario con las credenciales proporcionadas.");
             return null;
         }
-    }
-
-
-    public static String getMd5Hash(String password) {
-        return DigestUtils.md5Hex(password);
     }
 
     public static boolean isValidEmail(String email) {

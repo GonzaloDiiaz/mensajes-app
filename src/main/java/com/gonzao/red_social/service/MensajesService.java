@@ -10,21 +10,17 @@ public class MensajesService {
 
     public static void crearMensaje(User user, Scanner sc){
         System.out.println("Escribe tu mensaje");
-        String mensaje = sc.nextLine().trim();
+        String mensaje = sc.nextLine();
 
-        System.out.println("Ingrese su nombre");
-        String nombre = sc.nextLine().trim();
-
-        if (!mensaje.isEmpty() && !nombre.isEmpty()){
+        if (!mensaje.isEmpty()){
             Mensajes registro = new Mensajes(mensaje, user.getId_user());
             registro.setMensaje(mensaje);
-            registro.setAutor_mensaje(nombre);
+            registro.setAutor_mensaje(user.getFullname());
 
             MensajeDAO.crearMensajeDB(registro);
         }else {
             System.out.println("No puede haber campos vacios");
         }
-
     }
 
     public static void listarMensaje(){
